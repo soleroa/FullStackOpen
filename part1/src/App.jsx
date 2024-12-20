@@ -1,45 +1,57 @@
 const App = () => {
   const course = 'Half Stack application development'
-  const part1 = 'Fundamentals of React'
-  const exercises1 = 10
-  const part2 = 'Using props to pass data'
-  const exercises2 = 7
-  const part3 = 'State of a component'
-  const exercises3 = 14
+  const parts = [
+   {
+      name: 'Fundamentals of React',
+      exercises: 10
+    },
+    {
+      name: 'Using props to pass data',
+      exercises: 7
+    },
+    {
+      name: 'State of a component',
+      exercises:14
+    }
+  ]
+ 
+
 
   return (
     <div>
-      <Header course={course}/>
-      <Content contenido={part1} nroEjercicio={exercises1}/>
-      <Content contenido={part2} nroEjercicio={exercises2}/>
-      <Content contenido={part3} nroEjercicio={exercises3}/>
-      <Total nroEjercicio1= {exercises1} nroEjercicio2= {exercises2} nroEjercicio3 ={exercises3}/>
+        <Header course={course} />
+        <Content parts={parts} />
+        <Total parts={parts} />
     </div>
   )
 }
 
 const Header = (props) =>{
+  console.log(props);
   return(
     <div>
-    <Part contenido={props.part1} nroEjercicio={props.exercises1} />
-    <Part contenido={props.part2} nroEjercicio={props.exercises2} />
-    <Part contenido={props.part3} nroEjercicio={props.exercises3} />
-  </div>
+      <h1>
+        {props.course}
+      </h1>
+    </div>
   )
 }
 
 const Content = (props) =>{
   return(
     <div>
-      <p>{props.contenido} {props.nroEjercicio}</p>
+      <Part contenido={props.parts[0].name} nroEjercicio={props.parts[0].exercises}/>
+      <Part contenido={props.parts[1].name} nroEjercicio={props.parts[1].exercises}/>
+      <Part contenido={props.parts[2].name} nroEjercicio={props.parts[2].exercises}/>
     </div>
   )
 }
 
 const Total = (props) => {
+  const totalExercises = props.parts[0].exercises + props.parts[1].exercises + props.parts[2].exercises;  
   return(
     <div>
-     <p>Number of exercises {props.nroEjercicio1 + props.nroEjercicio2 + props.nroEjercicio3}</p> 
+     <p>Number of exercises {totalExercises}</p> 
     </div>
   )
 }
