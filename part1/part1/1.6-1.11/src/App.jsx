@@ -1,23 +1,35 @@
 import { useState } from "react";
+const StatisticsLine = ({ text, value }) => {
+  return (
+    <tr>
+      <td>
+        {text}: {value}
+      </td>
+    </tr>
+  );
+};
+
+const Button = ({ onClick, text }) => <button onClick={onClick}>{text}</button>;
 const Statistics = ({ good, neutral, bad }) => {
   const total = good + neutral + bad;
   const average = total ? (good - bad) / total : 0;
-  const positive = total ? (good + total) * 100 : 0;
+  const positive = total ? (good / total) * 100 : 0;
 
   if (total === 0) {
     return <p>No feedback given</p>;
   }
   return (
     <div>
-      <p>good {good}</p>
-      <p>neutral {neutral}</p>
-      <p>bad {bad}</p>
-      <p>all {total}</p>
-      <p>average {average}</p>
-      <p>positive {positive}</p>
+      <StatisticsLine text="good" value={good} />
+      <StatisticsLine text="neutral" value={neutral} />
+      <StatisticsLine text="bad" value={bad} />
+      <StatisticsLine text="Total" value={total} />
+      <StatisticsLine text="Average" value={average.toFixed(2)} />
+      <StatisticsLine text="Positive" value={`${positive.toFixed(2)}%`} />
     </div>
   );
 };
+
 const App = () => {
   // guarda los clics de cada botón en su propio estado
   const [good, setGood] = useState(0);
