@@ -52,17 +52,16 @@ const App = () => {
   const [newNumber, setNewNumber] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
 
-  // useEffect para hacer la solicitud a la API una sola vez al montar el componente
   useEffect(() => {
     axios
-      .get("http://localhost:3001/persons")
+      .get("https://tdrqcn-3001.csb.app/notes")
       .then((response) => {
-        setPersons(response.data); // Almacena los datos obtenidos del servidor
+        setPersons(response.data);
       })
       .catch((error) => {
         console.error("Error al obtener los datos:", error);
       });
-  }, []); // El array vacío significa que este efecto solo se ejecutará una vez
+  }, []);
 
   const handleNameChange = (event) => {
     setNewName(event.target.value);

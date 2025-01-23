@@ -8,7 +8,7 @@ const App = () => {
   const [showAll, setShowAll] = useState(false);
 
   useEffect(() => {
-    axios.get("http://localhost:3001/notes").then((response) => {
+    axios.get("https://tdrqcn-3001.csb.app/notes").then((response) => {
       setNotes(response.data);
     });
   }, []);
@@ -17,11 +17,18 @@ const App = () => {
     event.preventDefault();
     const noteObject = {
       content: newNote,
-      important: Math.random() > 0.5,
-      id: notes.length + 1,
+      important: Math.random() < 0.5,
     };
 
-    setNotes(notes.concat(noteObject));
+    axios
+      .post("https://tdrqcn-3001.csb.app/notes", noteObject)
+      .then((response) => {
+        setNotes(notes.concat(response.data)); // Asegúrate de usar response.data
+      })
+      .catch((error) => {
+        console.error("Error al enviar la solicitud POST:", error);
+      });
+
     setNewNote("");
   };
 
