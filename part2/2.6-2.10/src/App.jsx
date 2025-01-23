@@ -51,10 +51,10 @@ const App = () => {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
-
+  //solicitud get
   useEffect(() => {
     axios
-      .get("https://tdrqcn-3001.csb.app/notes")
+      .get("https://tdrqcn-3001.csb.app/persons")
       .then((response) => {
         setPersons(response.data);
       })
@@ -62,7 +62,15 @@ const App = () => {
         console.error("Error al obtener los datos:", error);
       });
   }, []);
-
+  //solicitud post
+  const agregarContacto = (nuevoContacto) => {
+    axios
+      .post("https://tdrqcn-3001.csb.app/persons", nuevoContacto)
+      .then((response) => {
+        setPersons(persons.concat(response.data));
+      })
+      .catch((error) => console.error("Error al agregar el contacto:", error));
+  };
   const handleNameChange = (event) => {
     setNewName(event.target.value);
   };
@@ -83,9 +91,8 @@ const App = () => {
     const newPerson = {
       name: newName,
       number: newNumber,
-      id: persons.length + 1,
     };
-    setPersons([...persons, newPerson]);
+    agregarContacto(newPerson);
     setNewName("");
     setNewNumber("");
   };
